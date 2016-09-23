@@ -42,4 +42,24 @@ public class UserService {
 		userDao.create(user);
 	}
 
+	public User login(String email, String senha) {
+		if (StringUtils.isBlank(email)) {
+			throw new IllegalArgumentException("Campo e-mail Obrigatório");
+		}
+
+		if (StringUtils.isBlank(senha)) {
+			throw new IllegalArgumentException("Campo Senha Obrigatório");
+		}
+
+		final User user = this.findById(email);
+
+		if (!senha.equals(user.getSenha())) {
+			throw new IllegalArgumentException("Usuário e/ou senha inválidos(s)");
+		}
+		return user;
+	}
+
+	public User findById(String email) {
+		return userDao.findById(email);
+	}
 }
