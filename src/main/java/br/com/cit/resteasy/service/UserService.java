@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.cit.resteasy.bean.User;
 import br.com.cit.resteasy.dao.UserDao;
+import br.com.cit.resteasy.exceptions.BusinessException;
 
 @Service
 public class UserService {
@@ -14,47 +15,26 @@ public class UserService {
 	private UserDao userDao;
 
 	public void create(User user) {
-		if (StringUtils.isBlank(user.getEmail())) {
-			throw new IllegalArgumentException("Campo e-mail obrigatório");
-		}
-		if (StringUtils.isBlank(user.getNome())) {
-			throw new IllegalArgumentException("Campo nome obrigatório");
-		}
-		if (StringUtils.isBlank(user.getSobrenome())) {
-			throw new IllegalArgumentException("Campo sobrenome obrigatório");
-		}
-		if (StringUtils.isBlank(user.getSenha())) {
-			throw new IllegalArgumentException("Campo senha obrigatório");
-		}
-		if (StringUtils.isBlank(user.getPais())) {
-			throw new IllegalArgumentException("Campo país obrigatório");
-		}
-		if (StringUtils.isBlank(user.getCidade())) {
-			throw new IllegalArgumentException("Campo cidade obrigatório");
-		}
-		if (StringUtils.isBlank(user.getEstado())) {
-			throw new IllegalArgumentException("Campo estado obrigatório");
-		}
 		final User existingUser = userDao.findById(user.getEmail());
 		if (existingUser != null) {
-			throw new IllegalArgumentException("Já existe um usuário cadastrado com esse e-mail");
+			throw new BusinessException("Já existe um usuário cadastrado com esse e-mail");
 		}
 		userDao.create(user);
 	}
 
 	public User login(String email, String senha) {
 		if (StringUtils.isBlank(email)) {
-			throw new IllegalArgumentException("Campo e-mail Obrigatório");
+			throw new BusinessException("Campo e-mail Obrigatório");
 		}
 
 		if (StringUtils.isBlank(senha)) {
-			throw new IllegalArgumentException("Campo Senha Obrigatório");
+			throw new BusinessException("Campo Senha Obrigatório");
 		}
 
 		final User user = this.findById(email);
 
 		if (!senha.equals(user.getSenha())) {
-			throw new IllegalArgumentException("Usuário e/ou senha inválidos(s)");
+			throw new BusinessException("Usuário e/ou senha inválidos(s)");
 		}
 		return user;
 	}

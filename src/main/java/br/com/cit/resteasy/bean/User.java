@@ -1,12 +1,36 @@
 package br.com.cit.resteasy.bean;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class User {
+
+	@NotEmpty(message = "Campo nome é obrigatório")
+	@Length(min = 3, max = 50, message = "Campo nome precisa ter entre 3 e 50 caracteres")
 	private String nome;
+
+	@NotEmpty(message = "Campo sobrenome é obrigatório")
+	@Length(min = 3, max = 50, message = "Campo sobrenome precisa ter entre 3 e 50 caracteres")
 	private String sobrenome;
+
+	@Pattern(regexp = "\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\\b", message = "E-mail inválido")
 	private String email;
+
+	@Length(min = 3, max = 50, message = "Campo senha precisa ter entre 6 e 50 caracteres")
+	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$", message = "Campo senha deve ter ao menos 1 letra e 1 número")
 	private String senha;
+
+	@NotEmpty(message = "Campo país é obrigatório")
+	@Length(min = 2, max = 2, message = "O campo país tem que ser uma sigla de 2 caracteres")
 	private String pais;
+
+	@NotEmpty(message = "Campo estado é obrigatório")
+	@Length(min = 2, max = 2, message = "O campo estado tem que ser uma sigla de 2 caracteres")
 	private String estado;
+
+	@NotEmpty(message = "Campo cidade é obrigatório")
 	private String cidade;
 
 	/**

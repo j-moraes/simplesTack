@@ -1,8 +1,6 @@
 package br.com.cit.resteasy.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -31,32 +29,19 @@ public class UserFacade {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/login")
 	public Response login(User user) {
-		try {
-			user = userService.login(user.getEmail(), user.getSenha());
-			final NewCookie loginCookie = new NewCookie(new Cookie("loggedIn", "true", "/", null));
-			final NewCookie idCookie = new NewCookie(new Cookie("id", user.getEmail(), "/", null));
-			return Response.status(Status.OK).cookie(loginCookie).cookie(idCookie).build();
-		} catch (final IllegalArgumentException arg) {
-			final Map<String, String> result = new HashMap<String, String>();
-			result.put("erro", arg.getMessage());
-			final NewCookie loginCookie = new NewCookie(new Cookie("loggedIn", "false", "/", null));
-			final NewCookie idCookie = new NewCookie(new Cookie("id", null, "/", null));
-			return Response.status(Status.BAD_REQUEST).cookie(loginCookie).cookie(idCookie).entity(result).build();
-		}
+		user = userService.login(user.getEmail(), user.getSenha());
+		final NewCookie loginCookie = new NewCookie(new Cookie("loggedIn", "true", "/", null));
+		final NewCookie idCookie = new NewCookie(new Cookie("id", user.getEmail(), "/", null));
+		return Response.status(Status.OK).cookie(loginCookie).cookie(idCookie).build();
 	}
 
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/create")
-	public Response create(User user) {
-		try {
-			userService.create(user);
-			return Response.status(Status.OK).entity(user).build();
-		} catch (final IllegalArgumentException arg) {
-			final Map<String, String> result = new HashMap<String, String>();
-			result.put("erro", arg.getMessage());
-			return Response.status(Status.BAD_REQUEST).entity(result).build();
-		}
+	public Response create(@Valid User user) {
+		userService.create(user);
+		return Response.status(Status.OK).entity(user).build();
+
 	}
 }

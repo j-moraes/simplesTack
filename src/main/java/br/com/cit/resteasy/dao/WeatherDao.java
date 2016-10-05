@@ -13,7 +13,7 @@ public class WeatherDao {
 	private RedisFacade redisFacade;
 
 	public void create(String city, String country, OpeanWeatherResponse weather) {
-		redisFacade.set(country + ":" + city, weather);
+		redisFacade.set(country + ":" + city, weather, 300);
 	}
 
 	public OpeanWeatherResponse findById(String city, String country) {

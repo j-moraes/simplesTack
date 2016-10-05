@@ -46,4 +46,20 @@ public class RedisFacade {
 		}
 		return null;
 	}
+	
+	public void set(String key, Object object, int timeout) {
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			final ObjectMapper mapper = new ObjectMapper();
+			jedis.setex(SafeEncoder.encode(key), timeout, SafeEncoder.encode(mapper.writeValueAsString(object)));
+		} catch(final Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+	}
+	
 }
