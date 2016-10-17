@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.cit.resteasy.bean.LoginDTO;
 import br.com.cit.resteasy.bean.User;
 
 @Component
@@ -28,7 +29,7 @@ public class UserFacade {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/login")
-	public Response login(User user) {
+	public Response login(LoginDTO user) {
 		user = userService.login(user.getEmail(), user.getSenha());
 		final NewCookie loginCookie = new NewCookie(new Cookie("loggedIn", "true", "/", null));
 		final NewCookie idCookie = new NewCookie(new Cookie("id", user.getEmail(), "/", null));

@@ -1,6 +1,5 @@
 package br.com.cit.resteasy.service;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,23 +19,6 @@ public class UserService {
 			throw new BusinessException("Já existe um usuário cadastrado com esse e-mail");
 		}
 		userDao.create(user);
-	}
-
-	public User login(String email, String senha) {
-		if (StringUtils.isBlank(email)) {
-			throw new BusinessException("Campo e-mail Obrigatório");
-		}
-
-		if (StringUtils.isBlank(senha)) {
-			throw new BusinessException("Campo Senha Obrigatório");
-		}
-
-		final User user = this.findById(email);
-
-		if (!senha.equals(user.getSenha())) {
-			throw new BusinessException("Usuário e/ou senha inválidos(s)");
-		}
-		return user;
 	}
 
 	public User findById(String email) {
