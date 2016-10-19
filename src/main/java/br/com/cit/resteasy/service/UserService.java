@@ -1,9 +1,9 @@
 package br.com.cit.resteasy.service;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.cit.resteasy.bean.LoginDTO;
 import br.com.cit.resteasy.bean.User;
 import br.com.cit.resteasy.dao.UserDao;
 import br.com.cit.resteasy.exceptions.BusinessException;
@@ -22,21 +22,11 @@ public class UserService {
 		userDao.create(user);
 	}
 
-	public User login(String email, String senha) {
-		if (StringUtils.isBlank(email)) {
-			throw new IllegalArgumentException("Campo e-mail obrigatório");
-		}
+	public LoginDTO login(String email, String senha) {
 
-		if (StringUtils.isBlank(senha)) {
-			throw new IllegalArgumentException("Campo senha obrigatório");
-		}
+		final LoginDTO loginDTO = userDao.findByEmail(email);
 
-		final User user = userDao.findById(email);
-		if (!senha.equals(user.getSenha())) {
-			throw new IllegalArgumentException("Usuário e/ou senha inválido(s)");
-		}
-
-		return user;
+		return loginDTO;
 	}
 
 	public User findById(String email) {
