@@ -21,7 +21,8 @@ public class UserDao {
 	}
 
 	public LoginDTO findByEmail(String email) {
-		return redisFacade.get("LOGINDTO:" + email, LoginDTO.class);
+		String key = "USER:" + email;
+		return redisFacade.get(key, LoginDTO.class);
 	}
 
 }

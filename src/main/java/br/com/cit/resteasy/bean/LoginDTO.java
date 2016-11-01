@@ -1,16 +1,15 @@
 package br.com.cit.resteasy.bean;
 
-import javax.validation.constraints.Pattern;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import org.hibernate.validator.constraints.Length;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginDTO {
 
-	@Pattern(regexp = "\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\\b", message = "E-mail inválido")
+	//@Pattern(regexp = "\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\\b", message = "E-mail inválido")
 	private String email;
 
-	@Length(min = 3, max = 50, message = "Campo senha precisa ter entre 6 e 50 caracteres")
-	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$", message = "Campo senha deve ter ao menos 1 letra e 1 número")
+	//@Length(min = 3, max = 50, message = "Campo senha precisa ter entre 6 e 50 caracteres")
+	//@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$", message = "Campo senha deve ter ao menos 1 letra e 1 número")
 	private String senha;
 
 	/**

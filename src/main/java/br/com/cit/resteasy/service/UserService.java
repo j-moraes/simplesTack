@@ -23,13 +23,20 @@ public class UserService {
 	}
 
 	public LoginDTO login(String email, String senha) {
-
 		final LoginDTO loginDTO = userDao.findByEmail(email);
 
+		if (!senha.equals(loginDTO.getSenha())) {
+			throw new IllegalArgumentException("Usuário e/ou senha inválidos");
+		}
 		return loginDTO;
 	}
 
 	public User findById(String email) {
 		return userDao.findById(email);
 	}
+
+	public LoginDTO findByEmail(String email) {
+		return userDao.findByEmail(email);
+	}
+
 }

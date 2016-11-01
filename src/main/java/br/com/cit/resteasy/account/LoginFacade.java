@@ -1,4 +1,4 @@
-package br.com.cit.resteasy.dao.generic;
+package br.com.cit.resteasy.account;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -30,8 +30,8 @@ public class LoginFacade {
 	public Response login(LoginDTO loginDTO) {
 		loginDTO = userService.login(loginDTO.getEmail(), loginDTO.getSenha());
 		final NewCookie loginCookie = new NewCookie(new Cookie("loggedIn", "true", "/", null));
-		final NewCookie idCookie = new NewCookie(new Cookie("id", loginDTO.getEmail(), "/", null));
-		return Response.status(Status.OK).cookie(loginCookie).cookie(idCookie).build();
+		final NewCookie emailCookie = new NewCookie(new Cookie("email", loginDTO.getEmail(), "/", null));
+		return Response.status(Status.OK).cookie(loginCookie).cookie(emailCookie).build();
 	}
 
 }

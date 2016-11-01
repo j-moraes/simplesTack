@@ -1,5 +1,6 @@
 package br.com.cit.resteasy.service;
 
+
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
